@@ -51,9 +51,11 @@ The next step is to train the model. Internally, this is done using Python, so m
 ### Define I/O options
 
 ### Define data options
-Next, we define data options. The most important are:  
+Next, we define data options. The most important are: 
+
 * **centerFeatures**:  logical indicating whether to learn the intercept (the means) in a per feature basis. This prevents you from having to center the data, so this option is always recommended (Default is TRUE). Only works for Gaussian views.
 * **removeIncompleteSamples**: logical indicating whether to remove samples that are not profiled in all omics (Default is FALSE)
+
 ```{r}
 DataOptions <- getDefaultDataOptions()
 DataOptions$centerFeatures <- TRUE
@@ -62,9 +64,11 @@ DataOptions$centerFeatures <- TRUE
 
 ### Define model options
 Next, we define model options. The most important are:  
-* **numFactors**: number of factors (default is 25). By default, the model does not automatically learn the number of factors. If you want the model to do this (based on a minimum variance explained criteria), set `TrainOptions$learnFactors` to `TRUE` and set `TrainOptions$dropFactorThreshold` to a non-zero value.
+
+* **numFactors**: number of factors (default is 25). By default, the model does not automatically learn the number of factors. If you want the model to do this (based on a minimum variance explained criteria), set `TrainOptions$dropFactorThreshold` to a non-zero value.
 * **likelihoods**: likelihood for each view. Usually we recommend gaussian for continuous data, bernoulli for binary data and poisson for count data. By default, the model tries to guess it from the data.
 * **sparsity**: do you want to use sparsity? This makes the interpretation easier so it is recommended (Default is TRUE).
+
 ```{r}
 ModelOptions <- getDefaultModelOptions(MOFAobject)
 ModelOptions$learnIntercept <- FALSE
@@ -72,14 +76,14 @@ ModelOptions$learnIntercept <- FALSE
 
 ### Define training options
 Next, we define training options. The most important are:  
+
 * **maxiter**: maximum number of iterations. Ideally set it large enough and use the convergence criteria `TrainOptions$tolerance`.
-* **learnFactors**: logical indicating whether to automatically learn the number of factors based on a minimum variance explained criterion. If you want to use this, set `ModelOptions$numFactors` to a large value and make sure you define the `TrainOptions$DropFactorThreshold` to a non-zero value.
 * **tolerance**: convergence threshold based on change in the evidence lower bound. For an exploratory run you can use a value between 1.0 and 0.1, but for a "final" model we recommend a value of 0.01.
-* **DropFactorThreshold**: threshold of fraction of variance explained to define a factor as inactive. This is the key parameter to let the model learn the number of factors. Factors explaining less than 'DropFactorThreshold' fraction of variation in all views will be removed. For example, a value of 0.01 (default) means that factors that explain less than 1\% of variance in all views will be discarded.
+* **DropFactorThreshold**: threshold of fraction of variance explained to define a factor as inactive. This is the key parameter to let the model learn the number of factors. Factors explaining less than 'DropFactorThreshold' fraction of variation in all views will be removed. For example, a value of 0.02 means that factors that explain less than 2\% of variance in all views will be discarded. If the value is set to 0, the number of factors is not learned and the specified number of factors in ModelOptions will be used.
+
 ```{r}
 TrainOptions <- getDefaultTrainOptions()
 TrainOptions$seed <- 2017
-TrainOptions$maxiter <- 100
 
 # Automatically drop factors that explain less than 2% of variance in all omics
 TrainOptions$DropFactorThreshold <- 0.02
