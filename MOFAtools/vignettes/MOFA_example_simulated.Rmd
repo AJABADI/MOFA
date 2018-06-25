@@ -31,6 +31,8 @@ TrainOptions <- getDefaultTrainOptions()
 ModelOptions <- getDefaultModelOptions(MOFAobject)
 DataOptions <- getDefaultDataOptions()
 
+TrainOptions$DropFactorThreshold <- 0.01
+
 MOFAobject <- prepareMOFA(
   MOFAobject, 
   DataOptions = DataOptions,
