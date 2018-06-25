@@ -7,7 +7,7 @@
 createMOFAobject(data)
 }
 \arguments{
-\item{data}{either a \code{MultiAssayExperiment} or a list of matrices with features as rows and samples as columns.}
+\item{data}{either a \code{\link{MultiAssayExperiment}} or a list of matrices with features as rows and samples as columns.}
 }
 \value{
 Returns an untrained \code{\link{MOFAmodel}} object. \cr
@@ -23,8 +23,7 @@ If the matrices have sample names, we will use them to match the different matri
 If matrices have no column names, all matrices must have the same number of columns, and you are responsible for filling any missing values.
 }
 \examples{
-# Option 1: Create a MOFAobject from a list of matrices
-with features in rows and samples in columns
+# Option 1: Create a MOFAobject from a list of matrices with features in rows and samples in columns
 data("CLL_data")
 MOFAobject <- createMOFAobject(CLL_data)
 
